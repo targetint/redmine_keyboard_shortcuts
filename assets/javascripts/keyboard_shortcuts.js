@@ -265,7 +265,11 @@ var KsListManager = Class.extend({
      l: {
       press: this.logTime.bind(this),
       description: "Log time for the issue under the cursor"
-        }
+        },
+        t: {
+  press: this.startTracker.bind(this),
+  description: "Start time tracker"
+}
     };
 
     if (checked_issues = $.cookie('checked_issues')) {
@@ -406,7 +410,16 @@ var KsListManager = Class.extend({
     var cur_id = this.issues[this.current_selected].id.replace('issue-', '');
     ks_dispatcher.go('time_entries/new?issue_id=' + cur_id);
 
-}
+},
+    startTracker: function(event) {
+      event.preventDefault();
+
+      var btn = $('a.js-start-tracker');
+
+      if (btn.length > 0) {
+        btn[0].click();
+      } 
+    }
 
 });
 
@@ -450,7 +463,12 @@ var KsIssueManager = Class.extend({
       s: {
         press: this.setStatus.bind(this),
         description: "Set Status"
-      }
+      },
+       t: {
+		press: this.startTracker.bind(this),
+		description: "Start time tracker",
+		allowInDialog: true
+		  }
     };
     this.issue_queue = $.cookie('issue_queue');
     this.issue_id = ks_issue_id;
