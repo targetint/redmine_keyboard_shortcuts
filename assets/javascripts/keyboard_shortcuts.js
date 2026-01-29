@@ -261,7 +261,11 @@ var KsListManager = Class.extend({
       o: {
         press: this.open.bind(this),
         description: "Open the issue under the cursor"
-      }
+      },
+     l: {
+      press: this.logTime.bind(this),
+      description: "Log time for the issue under the cursor"
+        }
     };
 
     if (checked_issues = $.cookie('checked_issues')) {
@@ -397,6 +401,12 @@ var KsListManager = Class.extend({
     var cur_id = this.issues[this.current_selected].id.replace('issue-', '');
     ks_dispatcher.go('issues/' + cur_id);
   },
+  
+   logTime: function() {
+    var cur_id = this.issues[this.current_selected].id.replace('issue-', '');
+    ks_dispatcher.go('time_entries/new?issue_id=' + cur_id);
+
+}
 
 });
 
