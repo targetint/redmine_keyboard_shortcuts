@@ -150,7 +150,20 @@ var KsGlobalManager = Class.extend({
         press: this.viewHelp.bind(this),
         description: "See all available shortcuts",
         allowInDialog: true
-      }
+      },
+	  O: {
+  press: this.openMyOKRs.bind(this),
+  description: "Open My OKRs"
+	},
+	P: {
+	  press: this.openPasswords.bind(this),
+	  description: "Open Passwords"
+	},
+	m: {
+	  press: this.openMyPage.bind(this),
+	  description: "Open My Page"
+	}
+
     };
   },
 
@@ -205,7 +218,15 @@ var KsGlobalManager = Class.extend({
       ks_dispatcher.go(issues_link.attr('href'));
     }
   },
-
+openMyOKRs: function() {
+	  ks_dispatcher.go('/okr/my');   // change URL if different
+	},
+	openPasswords: function() {
+	  ks_dispatcher.go('/all/keys'); // change URL if different
+	},
+    openMyPage: function() {
+  ks_dispatcher.go('/my/page');
+  },
   viewHelp: function() {
     if (ks_dispatcher.dialog && $$('.ks-help').length > 0) {
       ks_dispatcher.closeDialog();
