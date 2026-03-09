@@ -162,7 +162,24 @@ var KsGlobalManager = Class.extend({
 	m: {
 	  press: this.openMyPage.bind(this),
 	  description: "Open My Page"
-	}
+	},
+  ,
+C: {
+  press: this.viewAllContacts.bind(this),
+  description: "View all contacts for current project"
+},
+T: {
+  press: this.viewProjectTimeEntries.bind(this),
+  description: "View spent time for current project"
+},
+s: {
+  press: this.viewProjectSubscriptions.bind(this),
+  description: "View subscriptions for current project"
+},
+I: {
+  press: this.viewProjectInvoices.bind(this),
+  description: "View invoices for current project"
+}
 
     };
   },
@@ -218,6 +235,34 @@ var KsGlobalManager = Class.extend({
       ks_dispatcher.go(issues_link.attr('href'));
     }
   },
+  viewAllContacts: function() {
+  var contacts_link = $('.contacts');
+  if (contacts_link.length > 0) {
+    ks_dispatcher.go(contacts_link.attr('href'));
+  }
+},
+viewProjectTimeEntries: function() {
+  var time_entries_link = $('.time-entries');
+  if (time_entries_link.length > 0) {
+    ks_dispatcher.go(time_entries_link.attr('href'));
+  }
+},
+viewProjectSubscriptions: function() {
+  var match = window.location.pathname.match(/\/projects\/([^\/]+)/);
+  if (match) {
+    var project = match[1];
+    var url = "/projects/" + project + "/subscriptions";
+    ks_dispatcher.go(url);
+  }
+},
+viewProjectInvoices: function() {
+  var match = window.location.pathname.match(/\/projects\/([^\/]+)/);
+  if (match) {
+    var project = match[1];
+    var url = "/projects/" + project + "/invoices";
+    ks_dispatcher.go(url);
+  }
+},
 openMyOKRs: function() {
 	  ks_dispatcher.go('/okr/my');   // change URL if different
 	},
