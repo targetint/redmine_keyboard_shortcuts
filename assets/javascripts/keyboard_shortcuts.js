@@ -163,10 +163,13 @@ var KsGlobalManager = Class.extend({
 	  press: this.openMyPage.bind(this),
 	  description: "Open My Page"
 	},
-  ,
 C: {
   press: this.viewAllContacts.bind(this),
   description: "View all contacts for current project"
+},
+g: {
+  press: this.viewProjectGantt.bind(this),
+  description: "View Gantt chart for current project"
 },
 T: {
   press: this.viewProjectTimeEntries.bind(this),
@@ -245,6 +248,15 @@ viewProjectTimeEntries: function() {
   var time_entries_link = $('.time-entries');
   if (time_entries_link.length > 0) {
     ks_dispatcher.go(time_entries_link.attr('href'));
+  }
+},
+
+viewProjectGantt: function() {
+  var match = window.location.pathname.match(/\/projects\/([^\/]+)/);
+  if (match) {
+    var project = match[1];
+    var url = "/projects/" + project + "/issues/gantt";
+    ks_dispatcher.go(url);
   }
 },
 viewProjectSubscriptions: function() {
