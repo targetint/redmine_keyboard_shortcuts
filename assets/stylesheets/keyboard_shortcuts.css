@@ -1,82 +1,134 @@
 .autoscroll table.list tbody tr td.checkbox,
 .autoscroll table.list thead tr th.checkbox {
-  padding: 2px 2px 0 10px;
+padding: 2px 2px 0 10px;
 }
 
 .ks-selected .checkbox,
 #dialog ul.ks-list li.selected {
-  background: url(../images/item-selector.png) top left no-repeat;
+background: url(../images/item-selector.png) top left no-repeat;
 }
 
 #dialog ul.ks-list li:nth-child(even).selected {
-  background: #efefef url(../images/item-selector.png) top left no-repeat;
+background: #efefef url(../images/item-selector.png) top left no-repeat;
 }
 
 #dialog-wrapper {
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  text-align:center;
-  z-index: 1000;
+position: fixed;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+text-align: center;
+z-index: 1000;
+background: rgba(0,0,0,0.2);
 }
 
-#dialog {
-  width: 300px;
-  margin: 200px auto;
+/* Popup dialog */
+/* Popup dialog */
+#dialog-wrapper #dialog {
+  width: auto !important;        /* auto width based on content */
+  max-width: 85vw !important;    /* prevent overflow on small screens */
+  min-width: 350px;              /* keep minimum usable width */
+
+  margin: 80px auto;
+  padding: 10px 20px;
+
   background-color: #fff;
   border: 3px solid #777;
   text-align: center;
-}
 
+  max-height: 85vh;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+/* Dialog body with scrolling */
 #dialog-body {
-  padding: 5px 15px;
-  overflow: scroll;
+padding: 10px 20px;
+max-height: 70vh;
+overflow-y: auto;
+overflow-x: hidden;
 }
 
+/* Main title */
 #dialog h3 {
-  border: none;
-  background-color: #ddd;
-  color: #000;
-  font-size: 13px;
-  padding: 5px 15px;
-  margin: 0;
+border: none;
+background-color: #ddd;
+color: #000;
+font-size: 14px;
+padding: 8px 15px;
+margin: 0;
 }
 
+/* Section titles */
 #dialog h4 {
-  background: #fff;
-  color: #000;
-  text-align: left;
-  padding: 5px 0;
-  font-size: 13px;
-  border-bottom: 1px dotted #bbb;
+background: #fff;
+color: #000;
+text-align: left;
+padding: 6px 0;
+font-size: 13px;
+border-bottom: 1px dotted #bbb;
+margin-top: 10px;
+}
+
+/* Help table layout */
+#dialog table.ks-help {
+width: auto;
+max-width: 100%;
+border-collapse: collapse;
 }
 
 #dialog table.ks-help td {
-  text-align: left;
+text-align: left;
+padding: 6px 10px;
+vertical-align: top;
 }
 
+/* Shortcut key style */
 #dialog table.ks-help td.key {
-  font-weight: bold;
+font-weight: bold;
+width: 50px;
 }
 
+/* Issue queue list */
 #dialog ul.ks-list {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+list-style-type: none;
+margin: 0;
+padding: 0;
 }
 
 #dialog ul.ks-list li {
-  list-style-type: none;
-  text-align: left;
-  padding-left: 15px;
+list-style-type: none;
+text-align: left;
+padding: 6px 15px;
 }
 
 #dialog ul.ks-list li:nth-child(even) {
-  background: #efefef;
+background: #efefef;
 }
 
 #dialog ul.ks-list li a.current {
-  color: #000;
+color: #000;
+}
+
+/* Selected row styling */
+#dialog ul.ks-list li.selected {
+font-weight: bold;
+}
+
+/* Two-column layout support */
+.ks-help-columns {
+display: flex;
+gap: 40px;
+flex-wrap: nowrap;
+width: 100%;
+}
+
+.ks-col {
+flex: 1 1 0;
+min-width: 300px;
+}
+
+.ks-help td.key {
+font-weight: bold;
+width: 40px;
 }

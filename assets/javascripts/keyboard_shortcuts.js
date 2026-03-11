@@ -155,7 +155,7 @@ var KsGlobalManager = Class.extend({
   press: this.openMyOKRs.bind(this),
   description: "Open My OKRs"
 	},
-	P: {
+	y: {
 	  press: this.openPasswords.bind(this),
 	  description: "Open Passwords"
 	},
@@ -163,7 +163,7 @@ var KsGlobalManager = Class.extend({
 	  press: this.openMyPage.bind(this),
 	  description: "Open My Page"
 	},
-C: {
+c: {
   press: this.viewAllContacts.bind(this),
   description: "View all contacts for current project"
 },
@@ -171,7 +171,7 @@ g: {
   press: this.viewProjectGantt.bind(this),
   description: "View Gantt chart for current project"
 },
-T: {
+u: {
   press: this.viewProjectTimeEntries.bind(this),
   description: "View spent time for current project"
 },
@@ -179,7 +179,7 @@ s: {
   press: this.viewProjectSubscriptions.bind(this),
   description: "View subscriptions for current project"
 },
-I: {
+v: {
   press: this.viewProjectInvoices.bind(this),
   description: "View invoices for current project"
 }
@@ -284,24 +284,67 @@ openMyOKRs: function() {
     openMyPage: function() {
   ks_dispatcher.go('/my/page');
   },
-  viewHelp: function() {
-    if (ks_dispatcher.dialog && $$('.ks-help').length > 0) {
-      ks_dispatcher.closeDialog();
-      return;
-    }
-    var dialog = ks_dispatcher.createDialog();
-    dialog.title.html('Keyboard Shortcuts');
-    $.each(ks_dispatcher.ks_managers, function(i, ksm) {
-      dialog.body.append($('<h4></h4>').html(ksm.description));
-      var help = '<table class="ks-help">';
-      for (var j in ksm.keys) {
-        help += '<tr><td class="key">' + j + '</td><td>' + ksm.keys[j].description + '</td></tr>';
-      }
-      help += '</table>';
-      dialog.body.append(help);
-    });
-    dialog.fixPosition();
+viewHelp: function() {
+
+  if (ks_dispatcher.dialog && $('.ks-help-columns').length > 0) {
+    ks_dispatcher.closeDialog();
+    return;
   }
+
+  var dialog = ks_dispatcher.createDialog();
+  dialog.title.html('Keyboard Shortcuts');
+
+  var html = '<div class="ks-help-columns">';
+  html += '<div class="ks-col" id="ks-global"></div>';
+  html += '<div class="ks-col" id="ks-list"></div>';
+  html += '</div>';
+
+  dialog.body.append(html);
+
+  var globalTable = '<h4>Global Keyboard Shortcuts</h4><table class="ks-help">';
+  var listTable = '<h4>Keyboard Shortcuts for List View</h4><table class="ks-help">';
+
+  var hasListManager = false;
+
+  $.each(ks_dispatcher.ks_managers, function(i, ksm) {
+
+    if (!ksm.keys) return;
+
+    if (ksm instanceof KsListManager) {
+      hasListManager = true;
+    }
+
+    for (var key in ksm.keys) {
+
+      if (!ksm.keys[key]) continue;
+
+      var row = '<tr><td class="key">' + key + '</td><td>' +
+                ksm.keys[key].description + '</td></tr>';
+
+      if (ksm instanceof KsGlobalManager) {
+        globalTable += row;
+      }
+
+      if (ksm instanceof KsListManager) {
+        listTable += row;
+      }
+
+    }
+
+  });
+
+  globalTable += '</table>';
+  $('#ks-global').append(globalTable);
+
+  if (hasListManager) {
+    listTable += '</table>';
+    $('#ks-list').append(listTable);
+  } else {
+    $('#ks-list').remove(); // remove empty column
+  }
+
+  dialog.fixPosition();
+}
 
 });
 
@@ -712,7 +755,11 @@ var KsDialog = Class.extend({
     this.dialog = $('#dialog');
     this.title = $('#dialog-title');
     this.body = $('#dialog-body');
-
+    /* FIX DIALOG WIDTH HERE */
+    this.dialog.css({
+      'width': '1200px !important',
+      'max-width': '95vw'
+    });
     $('dialog-wrapper').on('click', function(event) {
       if (event.target.id == 'dialog-wrapper') {
         ks_dispatcher.closeDialog();
