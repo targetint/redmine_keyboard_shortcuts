@@ -175,7 +175,7 @@ u: {
   press: this.viewProjectTimeEntries.bind(this),
   description: "View spent time for current project"
 },
-s: {
+r: {
   press: this.viewProjectSubscriptions.bind(this),
   description: "View subscriptions for current project"
 },
