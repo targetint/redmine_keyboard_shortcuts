@@ -252,7 +252,7 @@ viewProjectTimeEntries: function() {
 },
 
 viewProjectGantt: function() {
-  var match = window.location.pathname.match(/\/projects\/([^\/]+)/);
+ var match = window.location.pathname.match(/\/(?:projects|odoo)\/([^\/]+)/);
   if (match) {
     var project = match[1];
     var url = "/projects/" + project + "/issues/gantt";
