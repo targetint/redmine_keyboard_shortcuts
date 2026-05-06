@@ -163,10 +163,7 @@ var KsGlobalManager = Class.extend({
 	  press: this.openMyPage.bind(this),
 	  description: "Open My Page"
 	},
-c: {
-  press: this.viewAllContacts.bind(this),
-  description: "View all contacts for current project"
-},
+
 g: {
   press: this.viewProjectGantt.bind(this),
   description: "View Gantt chart for current project"
@@ -174,10 +171,6 @@ g: {
 u: {
   press: this.viewProjectTimeEntries.bind(this),
   description: "View spent time for current project"
-},
-r: {
-  press: this.viewProjectSubscriptions.bind(this),
-  description: "View subscriptions for current project"
 },
 v: {
   press: this.viewProjectInvoices.bind(this),
@@ -238,12 +231,7 @@ v: {
       ks_dispatcher.go(issues_link.attr('href'));
     }
   },
-  viewAllContacts: function() {
-  var contacts_link = $('.contacts');
-  if (contacts_link.length > 0) {
-    ks_dispatcher.go(contacts_link.attr('href'));
-  }
-},
+
 viewProjectTimeEntries: function() {
   var time_entries_link = $('.time-entries');
   if (time_entries_link.length > 0) {
@@ -259,16 +247,9 @@ viewProjectGantt: function() {
     ks_dispatcher.go(url);
   }
 },
-viewProjectSubscriptions: function() {
-  var match = window.location.pathname.match(/\/projects\/([^\/]+)/);
-  if (match) {
-    var project = match[1];
-    var url = "/projects/" + project + "/subscriptions";
-    ks_dispatcher.go(url);
-  }
-},
+
 viewProjectInvoices: function() {
-  var match = window.location.pathname.match(/\/projects\/([^\/]+)/);
+ var match = window.location.pathname.match(/\/(?:projects|odoo)\/([^\/]+)/);
   if (match) {
     var project = match[1];
     var url = "/projects/" + project + "/invoices";
